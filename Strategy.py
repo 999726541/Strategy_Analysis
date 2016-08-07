@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 #现在就写了日线数据,这个strategy包括了基本的ma计算,熊牛定义
 #!!!!!!!!!!!!!!!!!!!!!注意只写了日线数据的基本策略!!!!!!!!!!!!!!!
+import pandas as pd
 import tushare as ts
 
 
@@ -31,9 +32,12 @@ class Strategy_Base(object):
         self.end_date = self._df.index[-1]
         self.win_count=0
         self.lost_count = 0
-        self.win=[]
-        self.lost=[]
+        self.win_rate=[]
+        self.win_cash=[]
+        self.lost_rate=[]
+        self.lost_cash=[]
         self.total_invest=total_invest
+        self.name = 'hs_300_strategy'
         #self.code = code
 
 
@@ -110,10 +114,12 @@ class Strategy_Base(object):
                 profit = self._df.equity[final] - self._df.equity[inital]
                 if profit > 0:
                     self.win_count += 1
-                    self.win.append(profit / self._df.equity[inital])
+                    self.win_cash.append(profit)
+                    self.win_rate.append(profit / self._df.equity[inital])
                 else:
+                    self.lost_cash.append(profit)
                     self.lost_count += 1
-                    self.lost.append(profit / self._df.equity[inital])
+                    self.lost_rate.append(profit / self._df.equity[inital])
                 inital, final = 0, 0
 
 
@@ -155,25 +161,62 @@ class Strategy_Base(object):
 
     def backtest(self, malist=[5, 12, 13, 18, 20, 30, 60, 120], column='close'):
         ###Order matters
+        f = open('Backtest_info.txt', 'a')
+        f.write('\n' + self.name + ' beacktest' + '\n')
         self.if_bear()
         self.if_bull()
         self.if_monkey()
         self.long_or_short()
         self._equity()
         self._win_lose()
+        #f.write('买入次数: '+str(self.long_count)+ '\n')
+        ##f.write('卖出次数: '+str(self.short_count)+ '\n')
         self._drawdown()
         self._return_rate()
         self.long_short_count()
         self._beta()
+        #f.write('信号个数: '+str(self.long_count+self.short_count)+'\n')
+        #f.write('盈利次数: '+str(self.win_count)+ '\n')
+        #f.write('单次全仓平仓赢: ' + str(max(self.win_rate))+ '\n')
+        #f.write('单次全仓平仓亏损:' + str(max(self.lost_rate))+ '\n')
+        #f.write('单次盈利占总盈利比: '+ str(max(self.win_cash)/sum(self.win_cash))+ '\n')
+        #average_win = sum(self.win_cash) / len(self.win_cash)
+        #average_lost = sum(self.lost_cash) / len(self.lost_cash)
+        #f.write('平均盈利: ' + str(average_win)+'\n')
+        #f.write('平均方差: ' + str(sum((i - average_win) ** 2 for i in self.win_cash) / len(self.win_cash))+ '\n')
+        #f.write('平均亏损: '+ str(average_lost)+ '\n')
+        #f.write('平均方差: ' + str(sum((i - average_lost) ** 2 for i in self.lost_cash) / len(self.lost_cash))+ '\n')
+        #f.write('胜率: '+ str(len(self.win_cash)/(len(self.win_cash)+len(self.lost_cash)))+ '\n')
+        #f.write('盈亏保障倍数: '+str(sum(self.win_cash)/sum(self.lost_cash))+ '\n')
         print('最大回撤:'+str(max(self.drawdown)))
         print('买入信号统计:'+str(self.long_count))
         print('卖出信号统计:' + str(self.short_count))
-        print('单次全仓平仓亏损:'+str(self.lost))
-        print('单次全仓平仓赢: '+str(self.win))
+        print('全仓平仓亏损:' + str(self.lost_rate))
+        print('全仓平仓赢: ' + str(self.win_rate))
         print('最大回报:'+str(self._df['return'].max()-1))
         print('最大亏损:'+str(self._df['return'].min()-1))
         print('总回报:'+str(self._df[len(self._df)-1:len(self._df)]['return']))
         return self._df
+
+    def coef_find(self):
+        average_win = sum(self.win_cash) / len(self.win_cash)
+        average_lost = sum(self.lost_cash) / len(self.lost_cash)
+        dic={}
+        dic['信号个数'] = [self.long_count+self.short_count]
+        dic['盈利次数'] = [self.win_count]
+        dic['单次全仓平仓赢'] = [max(self.win_rate)]
+        dic['单次全仓平仓亏损'] = [max(self.lost_rate)]
+        dic['单次盈利占总盈利比'] = [max(self.win_cash)/sum(self.win_cash)]
+        dic['平均盈利'] = [average_win]
+        dic['平均盈利方差'] = [sum(((i / average_win)-1) ** 2 for i in self.win_cash) / len(self.win_cash)]
+        dic['平均亏损'] = [average_lost]
+        dic['平均方差'] = [sum(((i / average_lost)-1) ** 2 for i in self.lost_cash) / len(self.lost_cash)]
+        dic['胜率'] = [len(self.win_cash)/(len(self.win_cash)+len(self.lost_cash))]
+        dic['盈亏保障倍数'] = [sum(self.win_cash)/sum(self.lost_cash)]
+        dic['买入次数'] = [len(self.win_cash)]
+        dic['卖出次数'] = [len(self.lost_cash)]
+        df = pd.DataFrame(dic)
+        print(df)
 
 if __name__=='__main__':
     df = ts.get_hist_data('160416','2015-07-27')
