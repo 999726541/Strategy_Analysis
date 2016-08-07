@@ -1,13 +1,9 @@
 #-*- coding:utf-8 -*-
 import tushare as ts
-import csv
-import pandas as pd
-import sqlalchemy
-from sqlalchemy import create_engine
-import datetime
-from Strategy import Strategy_Base
-import matplotlib.pyplot as plt
 
+from Models.find_ma import MA_CALCULATOR
+from Strategy import Strategy_Base
+from Visualization import get_rid_unchanged,plot_return_beta
 
 
 class hs_300_strategy(Strategy_Base):
@@ -42,13 +38,27 @@ class hs_300_strategy(Strategy_Base):
                 self._df.loc[i:i + 1, 'monkey'] = 1
         return self._df
 
-    def _if_long(self,i):#TODO set more infom @ position
+    def _if_long(self,i):
+        # 4个返回参数:
+        '''
+        Return with four parameter:     long,    invest_pct,     cash_used,  if_pct_long
+
+        long: If long or not: True or False
+
+        invest_pct: How much cash you perpared to used. a number range from 0 to 1, Total asset*invest_pct money will be
+        Used for cash_used
+
+        cash_used: how much percent money you used to long( when if_pct_long==1),
+         or how many share you want to long ( when if_pct_long==0)
+
+        if_pct_long:1 or 0
+        '''
         #牛市---------->
         if self._df.bull[i] ==1 and \
             self._df.ma_5_close[i] > self._df.ma_5_close[i-1] and \
             self._df.ma_5_close[i-1] < self._df.ma_5_close[i-2]:
             self._df.loc[i:i + 1, 'long'] = 1
-            return 1,3
+            return True,1,1,1
             #self._position(bull_long[0],bull_long[1],i,if_pct=if_pct)
 
         #猴市---------->
@@ -56,81 +66,55 @@ class hs_300_strategy(Strategy_Base):
             self._df.ma_12_close[i] > self._df.ma_12_close[i-1] and \
             self._df.ma_12_close[i-1] < self._df.ma_12_close[i-2]:
             self._df.loc[i:i + 1, 'long'] = 1
-            return 1,2
+            return True,0,1,1
 
         #熊市---------->
-        elif i < 11: return 0,0
+        elif i < 11: return False,1,1,1
         elif self._df.bear[i]==1 and \
             self._df.ma_5_close[i] > self._df.ma_18_close[i] and \
             self._df.ma_5_close[i-1] < self._df.ma_18_close[i-1] and \
                 self._df.ma_5_close[i] > self._df.ma_5_close[i-1] and \
                 (self._df.ma_30_close[i] - self._df.ma_30_close[i-10])/self._df.ma_30_close[i] > -0.07:
             self._df.loc[i:i + 1, 'long'] = 1
-            return 1,1
-        else: return 0,0
+            return True,0,1,1
+        else: return False,1,1,1
 
 
-    def _if_short(self,i):#TODO
+    def _if_short(self,i):
+        '''
+        Return 3 param:     short,  short_nub,  if_pct_short
+        :short: True or False
+        :short_numb: how much percent share you want to short(if_pct_short=1)
+                     how many shares you want to short(if_pct_short=0)
+        :if_pct_short: 0 or 1
+        '''
         # 牛市---------->
         if self._df.bull[i] ==1 and \
             (self._df.ma_5_close[i] < self._df.ma_20_close[i] and self._df.ma_5_close[i-1] > self._df.ma_20_close[i-1]):
             self._df.loc[i:i + 1, 'short'] = 1
-            return 2,3
+            return True,1,1
         # 熊市---------->
         elif self._df.bear[i] ==1 and \
             self._df.ma_5_close[i] < self._df.ma_5_close[i - 1] and \
             self._df.ma_5_close[i - 1] > self._df.ma_5_close[i - 2]:
             self._df.loc[i:i + 1, 'short'] = 1
-            return 2,1
+            return True,1,1
         # 猴市---------->
         elif self._df.monkey[i] ==1 and \
             self._df.ma_5_close[i] < self._df.ma_13_close[i] and \
             self._df.ma_5_close[i-1] > self._df.ma_13_close[i-1]:
             self._df.loc[i:i + 1, 'short'] = 1
-            return 2,2
+            return True,1,1
         else:
-            return 0,0
-
-    '''def long_or_short(self,bull=[1,1,1],monkey=[1,1,1],bear=[1,1,1],if_pct=1):#TODO inherit more info from long & short
-        #if_pct=1,以资金为单位,每次买入股票可以不是整数,仓位不为整数
-        #if_pct=0,以单个股票为买入单位,每次买入股票是整数,仓位为整数,会有余钱产生
-        #bull_long=[1,1,1],[分仓,每次买入百分比,每次卖出百分比],数值在0到1之间,1是满仓或者
-        #if if_pct=0,bull_long=[1,1,1],[分仓,每次买入股票数,每次卖出股票数]
-        for i in range(len(self._df)):
-            self._df.loc[i :i + 1, 'cash'] = self.total_invest
-            if i<= 1:continue
-            a,b = self._if_long(i)
-            c,d = self._if_short(i)
-            ll = [bear] + [monkey] + [bull]
-            if i==len(self._df)-1:continue
-            if a==1:
-                self._position(ll[b-1][0],ll[b-1][1],ll[b-1][2],i,if_pct=if_pct,long_short=1)
-            if c==2:
-                self._position(ll[d - 1][0], ll[d - 1][1], ll[d - 1][2], i, if_pct=if_pct, long_short=2)
-            if a==0 and c==0:
-                self._df.loc[i+1 :i + 2, 'position'] = self._df.position[i]'''
+            return False,1,1
 
 
 if __name__=='__main__':
-    df = ts.get_hist_data('160416')
+    df = ts.get_hist_data('hs300','2016-01-01')
+    df = MA_CALCULATOR(df)
+    df = df.get_ma()
     test = hs_300_strategy(df)
     pgraph = test.backtest()
     test._df.to_csv('test2.csv')
-    graph = pgraph.reset_index()
-    i=0
-    n=1
-    length = len(graph)
-    while i < length:
-        #print(len(graph))
-        while graph.equity[i] == graph.equity[n]:
-            #print(graph.equity[i],graph.equity[n])
-            graph = graph.drop(n)
-            n+=1
-            if n>=length:break
-            #print(i)
-            #print(n)
-        i=n
-        n+=1
-        #print(i)
-    graph.plot('date',['return','beta'])
-    plt.show()
+    pgraph = get_rid_unchanged(pgraph)
+    plot_return_beta(pgraph)

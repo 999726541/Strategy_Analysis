@@ -2,11 +2,6 @@
 #现在就写了日线数据,这个strategy包括了基本的ma计算,熊牛定义
 #!!!!!!!!!!!!!!!!!!!!!注意只写了日线数据的基本策略!!!!!!!!!!!!!!!
 import tushare as ts
-import csv
-import pandas as pd
-import sqlalchemy
-from sqlalchemy import create_engine
-import datetime
 
 
 class Strategy_Base(object):
@@ -41,24 +36,6 @@ class Strategy_Base(object):
         self.total_invest=total_invest
         #self.code = code
 
-    def find_date(self, dealy, today):
-        _day = datetime.datetime.strptime(today, '%Y-%m-%d') - datetime.timedelta(dealy)
-        return str(_day)[:10]
-
-    def __ma(self,n=7,period = 'day',column_name ='close'):
-        if period == 'day':
-            if len(self._df) < n: raise str('No enough data to calculate MA')
-            #df = pd.rolling_mean(self.__df['close'], n)
-            df = self._df['close'].rolling(n).mean()
-            name = 'ma_' + str(n) + '_' + column_name
-            df.name = name
-            self._df = pd.concat([self._df, df], axis=1)
-            print('calculated: '+'ma_'+str(n)+'_'+column_name+' success')
-
-    def get_ma(self,ll=[5,12,13,18,20,30,60,120],period='day',column_name = 'close'):
-        for i in ll:
-            self.__ma(n=i,period=period,column_name=column_name)
-        return self._df
 
     def if_bull(self):
         #返回新的牛市df
@@ -83,7 +60,6 @@ class Strategy_Base(object):
         if if_pct == 1:
             if long_short==1:
                 self._df.loc[i + 1:i + 2, 'position'] = self.total_invest*invest_pct*long_pct/self._df.open[i+1]+self._df.position[i]
-                print(self._df.position[i+1])
                 print('Purchased stock: used '+str(self.total_invest*invest_pct*long_pct)+' cash')
                 self.total_invest -= self.total_invest*invest_pct*long_pct
                 print('cash left:'+str(self.total_invest))
@@ -145,26 +121,27 @@ class Strategy_Base(object):
         for i in range(len(self._df)):
             self._df.loc[i:i + 1, 'return'] = self._df.equity[i]/self.initial_invest
 
-    def long_or_short(self, bull=[1, 1, 1], monkey=[1, 1, 1], bear=[1, 1, 1], if_pct=1):
+    def long_or_short(self):
         # if_pct=1,以资金为单位,每次买入股票可以不是整数,仓位不为整数
         # if_pct=0,以单个股票为买入单位,每次买入股票是整数,仓位为整数,会有余钱产生
-        # bull_long=[1,1,1],[分仓,每次买入百分比,每次卖出百分比],数值在0到1之间,1是满仓或者
-        # if if_pct=0,bull_long=[1,1,1],[分仓,每次买入股票数,每次卖出股票数]
-        # a == 1    long;   c == 2    short
+        # invest_pct:愿意花总资金的多少做投资
+        # cash_used:愿意每次买入多少,买入可以是一百分比资金为单位或者以股票为单位
+        # short_nub:愿意卖出多少,卖出可以是一百分比资金为单位或者以股票为单位
         for i in range(len(self._df)):
             self._df.loc[i:i + 1, 'cash'] = self.total_invest
             if i <= 1: continue
-            a, b = self._if_long(i)
-            c, d = self._if_short(i)
-            ll = [bear] + [monkey] + [bull]
+
+            long,invest_pct, cash_used, if_pct_long = self._if_long(i)
+            short, short_nub, if_pct_short = self._if_short(i)
+
             if i == len(self._df) - 1: continue
-            if c == 2:
-                self._position(ll[d - 1][0], ll[d - 1][1], ll[d - 1][2], i, if_pct=if_pct, long_short=2)
+            if short == True:
+                self._position(short_pct=short_nub,i=i,if_pct=if_pct_short, long_short=2)
+
+            if long == True:
+                self._position(invest_pct=invest_pct,long_pct=cash_used, i=i, if_pct=if_pct_long, long_short=1)
                 continue
-            if a == 1:
-                self._position(ll[b - 1][0], ll[b - 1][1], ll[b - 1][2], i, if_pct=if_pct, long_short=1)
-                continue
-            if a == 0 and c == 0:
+            if long == False and short == False:
                 self._df.loc[i + 1:i + 2, 'position'] = self._df.position[i]
 
     def long_short_count(self):
@@ -176,13 +153,12 @@ class Strategy_Base(object):
         for i in range(len(self._df)):
             self._df.loc[i:i+1,'beta']=self._df.close[i]/self._df.close[0]
 
-    def backtest(self, malist=[5, 12, 13, 18, 20, 30, 60, 120], column='close',bull=[1, 1, 1], monkey=[1, 1, 1], bear=[1, 1, 1],if_pct=1):
+    def backtest(self, malist=[5, 12, 13, 18, 20, 30, 60, 120], column='close'):
         ###Order matters
-        self.get_ma(ll=malist, column_name=column)
         self.if_bear()
         self.if_bull()
         self.if_monkey()
-        self.long_or_short(bull=bull, monkey=monkey, bear=bear,if_pct=1)
+        self.long_or_short()
         self._equity()
         self._win_lose()
         self._drawdown()
@@ -207,5 +183,5 @@ if __name__=='__main__':
     test.if_bull()
     test.if_bear()
     mm = test.if_monkey()
-    mm.to_csv('test.csv')
+    mm.to_csv('test.txt')
     #print(mm.monkey)

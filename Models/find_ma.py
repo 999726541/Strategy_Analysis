@@ -1,19 +1,23 @@
 #-*- coding:UTF-8 -*-
-import tushare as ts
-import csv
-import pandas as pd
-import sqlalchemy
-from sqlalchemy import create_engine
 import datetime
+
+import pandas as pd
+import tushare as ts
 
 
 class MA_CALCULATOR():
 
     def __init__(self,df):
         '''
+        Index is the date of data
         :param df:  DataFrame
         '''
+        try:
+            datetime.datetime.strptime(df.index[0],'%Y-%d-%m')
+        except Exception:
+            raise 'Index of the DataFrame is not date'
         self._df = df
+        self._df = self._df.sort_index()
 
     def find_date(self, dealy, today):
         _day = datetime.datetime.strptime(today, '%Y-%m-%d') - datetime.timedelta(dealy)
@@ -43,6 +47,7 @@ class MA_CALCULATOR():
 
 if __name__=='__main__':
     df = ts.get_hist_data('hs300')
+    df = df.reset_index()
     test = MA_CALCULATOR(df)
-    df = test.get_ma(ll=[7],column_name='close')
+    df = test.get_ma(ll=[5],column_name='close')
     print(df)
