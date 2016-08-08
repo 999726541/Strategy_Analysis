@@ -1,12 +1,10 @@
-#-*- coding:utf-8 -*-
-import tushare as ts
+#-*-coding:UTF-8 -*-
 
 from Models.find_ma import MA_CALCULATOR
 from Strategy import Strategy_Base
-from Visualization import get_rid_unchanged,plot_return_beta
+from pitcher import read_csv_excel
 
-
-class hs_300_strategy(Strategy_Base):
+class PETRO_ETF(Strategy_Base):
 
     def if_bull(self,longest_period):
         # 返回新的牛市df
@@ -30,15 +28,14 @@ class hs_300_strategy(Strategy_Base):
                 self._df.loc[i:i + 1, 'bear'] = 1
         return self._df
 
-
     def if_monkey(self,longest_period):
-        #返回猴市
+        # 返回猴市
         for i in range(longest_period,len(self._df)):
             if self._df.bull[i] == 0 and self._df.bear[i] == 0:
                 self._df.loc[i:i + 1, 'monkey'] = 1
         return self._df
 
-    def _if_long(self,i):
+    def _if_long(self, i):
         # 4个返回参数:
         '''
         Return with four parameter:     long,    invest_pct,     cash_used,  if_pct_long
@@ -53,34 +50,25 @@ class hs_300_strategy(Strategy_Base):
 
         if_pct_long:1 or 0
         '''
-        #牛市---------->
-        if self._df.bull[i] ==1 and \
-            self._df.ma_5_close[i] > self._df.ma_5_close[i-1] and \
-            self._df.ma_5_close[i-1] < self._df.ma_5_close[i-2]:
+        # 牛市---------->
+        if self._df.bull[i] == 1 and \
+                        self._df.ma_5_close[i] > self._df.ma_5_close[i - 1] and \
+                        self._df.ma_5_close[i - 1] < self._df.ma_5_close[i - 2]:
             self._df.loc[i:i + 1, 'long'] = 1
-            return True,1,1,1
-            #self._position(bull_long[0],bull_long[1],i,if_pct=if_pct)
+            return True, 1, 1, 1
+            # self._position(bull_long[0],bull_long[1],i,if_pct=if_pct)
 
-        #猴市---------->
-        elif  self._df.monkey[i] ==1 and \
-            self._df.ma_12_close[i] > self._df.ma_12_close[i-1] and \
-            self._df.ma_12_close[i-1] < self._df.ma_12_close[i-2]:
+        # 猴市---------->
+        if self._df.monkey[i] == 1 and \
+                        self._df.ma_12_close[i] > self._df.ma_12_close[i - 1] and \
+                        self._df.ma_12_close[i - 1] < self._df.ma_12_close[i - 2]:
             self._df.loc[i:i + 1, 'long'] = 1
-            return True,1,1,1
+            return True, 1, 1, 1
+        # 熊市---------->
+        else:
+            return False, 1, 1, 1
 
-        #熊市---------->
-        elif i < 11: return False,1,1,1
-        elif self._df.bear[i]==1 and \
-            self._df.ma_5_close[i] > self._df.ma_18_close[i] and \
-            self._df.ma_5_close[i-1] < self._df.ma_18_close[i-1] and \
-                self._df.ma_5_close[i] > self._df.ma_5_close[i-1] and \
-                (self._df.ma_30_close[i] - self._df.ma_30_close[i-10])/self._df.ma_30_close[i] > -0.07:
-            self._df.loc[i:i + 1, 'long'] = 1
-            return True,1,1,1
-        else: return False,1,1,1
-
-
-    def _if_short(self,i):
+    def _if_short(self, i):
         '''
         Return 3 param:     short,  short_nub,  if_pct_short
         :short: True or False
@@ -89,33 +77,30 @@ class hs_300_strategy(Strategy_Base):
         :if_pct_short: 0 or 1
         '''
         # 牛市---------->
-        if self._df.bull[i] ==1 and \
-            (self._df.ma_5_close[i] < self._df.ma_20_close[i] and self._df.ma_5_close[i-1] > self._df.ma_20_close[i-1]):
+        if self._df.bull[i] == 1 and \
+                (self._df.ma_5_close[i] < self._df.ma_16_close[i] and self._df.ma_5_close[i - 1] > self._df.ma_16_close[
+                        i - 1]):
             self._df.loc[i:i + 1, 'short'] = 1
-            return True,1,1
+            return True, 1, 1
         # 熊市---------->
-        elif self._df.bear[i] ==1 and \
-            self._df.ma_5_close[i] < self._df.ma_5_close[i - 1] and \
-            self._df.ma_5_close[i - 1] > self._df.ma_5_close[i - 2]:
-            self._df.loc[i:i + 1, 'short'] = 1
-            return True,1,1
         # 猴市---------->
-        elif self._df.monkey[i] ==1 and \
-            self._df.ma_5_close[i] < self._df.ma_13_close[i] and \
-            self._df.ma_5_close[i-1] > self._df.ma_13_close[i-1]:
+        elif self._df.monkey[i] == 1 and \
+                        self._df.ma_12_close[i] < self._df.ma_12_close[i-1] and \
+                        self._df.ma_12_close[i - 1] > self._df.ma_12_close[i - 2]:
             self._df.loc[i:i + 1, 'short'] = 1
-            return True,1,1
+            return True, 1, 1
         else:
-            return False,1,1
-
+            return False, 1, 1
 
 if __name__=='__main__':
-    df = ts.get_hist_data('hs300','2016-01-01')
+    df = read_csv_excel('/Users/leotao/Downloads/黄金ETF回测.xlsx','择时分析-创')
+    print(df)
     df = MA_CALCULATOR(df)
-    df = df.get_ma()
-    test = hs_300_strategy(df)
-    pgraph = test.backtest()
-    #test._df.to_csv('test2.csv')
-    test.coef_find()
-    pgraph = get_rid_unchanged(pgraph)
-    plot_return_beta(pgraph)
+    df = df.get_ma(ll=[5,12,13,16,18,20,30,60,120])
+    test = PETRO_ETF(df)
+    #result = test.backtest(longest_period=120)
+    #pgraph = get_rid_unchanged(result)
+    #plot_return_beta(pgraph)
+    #test.today_signal(120)
+
+

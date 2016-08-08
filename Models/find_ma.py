@@ -13,7 +13,8 @@ class MA_CALCULATOR():
         :param df:  DataFrame
         '''
         try:
-            datetime.datetime.strptime(df.index[0],'%Y-%d-%m')
+            datetime.datetime.strptime(df.index[0],'%Y-%m-%d')
+
         except Exception:
             raise 'Index of the DataFrame is not date'
         self._df = df

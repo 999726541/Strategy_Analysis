@@ -1,18 +1,8 @@
-from pyalgotrade.tools import yahoofinance
-from pyalgotrade import strategy
-from pyalgotrade.barfeed import yahoofeed
-from pyalgotrade.technical import ma
-import logging
-import tushare as ts
-import pandas
-import sqlalchemy
+#-*- coding:UTF-8 -*-
+import datetime
+
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.mlab as mlab
-import matplotlib.ticker as ticker
-
-
+import sqlalchemy
 
 
 class ImportOracle():
@@ -34,11 +24,28 @@ class SQL_(ImportOracle):
         df = self.fetch(sql)
         df.to_csv('export.csv')
 
+def read_csv_excel(path,sheetname=None):
+    if '.xlsx' in path:
+        df = pd.read_excel(path,sheetname=sheetname)
+    if '.csv' in path:
+        df = pd.read_csv(path)
+    #print(df)
+    for i in range(len(df)):
+        #print(df.date[i])
+        #print(str(datetime.datetime.strptime(df.date[k].replace(' ','').replace('-','/'),('%Y/%m/%d')))[0:10])
+        df.loc[i,'date'] = str(datetime.datetime.strptime(df.date[i].replace(' ','').replace('-','/'),('%Y/%m/%d')))[0:10]
+    #print(df)
+    df = df.set_index('date')
+    return df
 
 if __name__=='__main__':
+    exe = read_csv_excel('/Users/leotao/Downloads/石油ETF回测.csv','择时分析-创')
+    print(exe)
+    '''
     test = SQL_()
     print('success con')
     sql = 'select * from ALL_INDEX_MONTHLY where code = '+"'"+'sz'+"'"+'order by date_'
     test.to_csv(sql)
     r = mlab.csv2rec('export.csv')
     r.sort()
+    '''
