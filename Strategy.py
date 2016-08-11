@@ -168,8 +168,8 @@ class Strategy_Base(object):
 
     def backtest(self):
         ###Order matters
-        self.if_bear()
         self.if_bull()
+        self.if_bear()
         self.if_monkey()
         self.long_or_short()
         self._equity()
@@ -243,8 +243,8 @@ class Strategy_Base(object):
         #print(df)
 
     def today_signal(self):
-        self.if_bear()
         self.if_bull()
+        self.if_bear()
         self.if_monkey()
         self.long_or_short()
         return self._df[len(self._df)-5:len(self._df)].loc[:,['monkey','bull','bear','long','short','close']]

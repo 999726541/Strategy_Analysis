@@ -13,7 +13,7 @@ class NSDK(Strategy_Base):
             dd = self._df[i:i + 1]
             if dd.ma_60_close[0] > dd.ma_250_close[0] and \
                             dd.ma_120_close[0] > dd.ma_250_close[0]:
-                self._df.loc[i:i + 1, ('bull')] = 1
+                self._df.loc[i:i + 1, 'bull'] = 1
         return self._df
 
     def if_bear(self,longest_period=0):

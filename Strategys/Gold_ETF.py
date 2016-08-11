@@ -101,7 +101,7 @@ if __name__=='__main__':
     df = MA_CALCULATOR(df)
     df = df.get_ma(ll=[5,12,13,16,18,20,30,60,120])
     test = GOLD_ETF(df)
-    result = test.backtest(longest_period=120)
+    result = test.backtest()
     print('start date: ' + test.start_date)
     pgraph = get_rid_unchanged(result)
     plot_return_beta(pgraph)
