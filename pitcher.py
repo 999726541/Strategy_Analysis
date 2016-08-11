@@ -3,7 +3,9 @@ import datetime
 
 import pandas as pd
 import sqlalchemy
+import tushare as ts
 
+from Models.find_ma import MA_CALCULATOR
 
 class ImportOracle():
     def __init__(self):
@@ -37,6 +39,18 @@ def read_csv_excel(path,sheetname=None):
     #print(df)
     df = df.set_index('date')
     return df
+
+
+def get_his_data(code, start='2014-12-31', end=str(datetime.datetime.today())[0:10], ma=[5, 12, 13, 18, 20, 30, 60, 120], period='day',
+                 column_name='close'):
+    df = ts.get_hist_data(code)
+    df = MA_CALCULATOR(df)
+    df = df.get_ma(ll=ma, period=period, column_name=column_name)
+    df = df[start:end]
+    if df.isnull().any().any():
+        raise 'Need more date info for calculating MA before last NaN'
+    return df
+
 
 if __name__=='__main__':
     exe = read_csv_excel('/Users/leotao/Downloads/石油ETF回测.csv','择时分析-创')

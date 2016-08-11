@@ -1,14 +1,14 @@
 #-*- coding:utf-8 -*-
-import tushare as ts
 
 from Models.find_ma import MA_CALCULATOR
 from Strategy import Strategy_Base
 from Visualization import get_rid_unchanged,plot_return_beta
+from pitcher import read_csv_excel
 
 
 class hs_300_strategy(Strategy_Base):
 
-    def if_bull(self,longest_period):
+    def if_bull(self,longest_period=0):
         # 返回新的牛市df
         for i in range(longest_period,len(self._df)):
             dd = self._df[i:i + 1]
@@ -19,7 +19,7 @@ class hs_300_strategy(Strategy_Base):
                 self._df.loc[i:i + 1, ('bull')] = 1
         return self._df
 
-    def if_bear(self,longest_period):
+    def if_bear(self,longest_period=0):
         # 返回熊市值
         for i in range(longest_period,len(self._df)):
             dd = self._df[i:i + 1]
@@ -31,7 +31,7 @@ class hs_300_strategy(Strategy_Base):
         return self._df
 
 
-    def if_monkey(self,longest_period):
+    def if_monkey(self,longest_period=0):
         #返回猴市
         for i in range(longest_period,len(self._df)):
             if self._df.bull[i] == 0 and self._df.bear[i] == 0:
@@ -69,7 +69,6 @@ class hs_300_strategy(Strategy_Base):
             return True,1,1,1
 
         #熊市---------->
-        elif i < 11: return False,1,1,1
         elif self._df.bear[i]==1 and \
             self._df.ma_5_close[i] > self._df.ma_18_close[i] and \
             self._df.ma_5_close[i-1] < self._df.ma_18_close[i-1] and \
@@ -110,12 +109,15 @@ class hs_300_strategy(Strategy_Base):
 
 
 if __name__=='__main__':
-    df = ts.get_hist_data('hs300','2016-01-01')
+    #df = get_his_data('hs300',ma = [5,12,13,18,20,30,60,120])
+    #print(df)
+    df = read_csv_excel('/Users/leotao/Downloads/沪深300回测.xlsx', '择时分析-创')
     df = MA_CALCULATOR(df)
-    df = df.get_ma()
+    df = df.get_ma(ll = [5,12,13,18,20,30,60,120])
     test = hs_300_strategy(df)
     pgraph = test.backtest()
-    #test._df.to_csv('test2.csv')
-    test.coef_find()
+    print('start date: ' + test.start_date)
+    test._df.to_csv('test2.csv')
+    #test.coef_find()
     pgraph = get_rid_unchanged(pgraph)
     plot_return_beta(pgraph)

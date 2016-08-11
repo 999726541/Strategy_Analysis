@@ -2,11 +2,13 @@
 
 from Models.find_ma import MA_CALCULATOR
 from Strategy import Strategy_Base
+from Visualization import get_rid_unchanged,plot_return_beta
 from pitcher import read_csv_excel
 
-class PETRO_ETF(Strategy_Base):
 
-    def if_bull(self,longest_period):
+class GOLD_ETF(Strategy_Base):
+
+    def if_bull(self,longest_period=0):
         # 返回新的牛市df
         for i in range(longest_period,len(self._df)):
             dd = self._df[i:i + 1]
@@ -17,7 +19,7 @@ class PETRO_ETF(Strategy_Base):
                 self._df.loc[i:i + 1, ('bull')] = 1
         return self._df
 
-    def if_bear(self,longest_period):
+    def if_bear(self,longest_period=0):
         # 返回熊市值
         for i in range(longest_period,len(self._df)):
             dd = self._df[i:i + 1]
@@ -28,7 +30,7 @@ class PETRO_ETF(Strategy_Base):
                 self._df.loc[i:i + 1, 'bear'] = 1
         return self._df
 
-    def if_monkey(self,longest_period):
+    def if_monkey(self,longest_period=0):
         # 返回猴市
         for i in range(longest_period,len(self._df)):
             if self._df.bull[i] == 0 and self._df.bear[i] == 0:
@@ -94,13 +96,15 @@ class PETRO_ETF(Strategy_Base):
 
 if __name__=='__main__':
     df = read_csv_excel('/Users/leotao/Downloads/黄金ETF回测.xlsx','择时分析-创')
-    print(df)
+    #df = ts.get_hist_data('160719')
+    #print(df)
     df = MA_CALCULATOR(df)
     df = df.get_ma(ll=[5,12,13,16,18,20,30,60,120])
-    test = PETRO_ETF(df)
-    #result = test.backtest(longest_period=120)
-    #pgraph = get_rid_unchanged(result)
-    #plot_return_beta(pgraph)
+    test = GOLD_ETF(df)
+    result = test.backtest(longest_period=120)
+    print('start date: ' + test.start_date)
+    pgraph = get_rid_unchanged(result)
+    plot_return_beta(pgraph)
     #test.today_signal(120)
 
 

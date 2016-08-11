@@ -43,7 +43,10 @@ class MA_CALCULATOR():
         '''
         for i in ll:
             self.__ma(n=i, period=period, column_name=column_name)
+        #print(self._df)
+        self._df = self._df.drop(self._df.index[0:max(ll)])
         return self._df
+
 
 
 if __name__=='__main__':
