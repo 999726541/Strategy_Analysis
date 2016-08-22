@@ -1,9 +1,8 @@
 #-*- coding:utf-8 -*-
 
-from Models.find_ma import MA_CALCULATOR
 from Strategy import Strategy_Base
 from Visualization import get_rid_unchanged,plot_return_beta
-from pitcher import read_csv_excel
+from pitcher import get_his_data
 
 
 class hs_300_strategy(Strategy_Base):
@@ -109,11 +108,11 @@ class hs_300_strategy(Strategy_Base):
 
 
 if __name__=='__main__':
-    #df = get_his_data('hs300',ma = [5,12,13,18,20,30,60,120])
+    df = get_his_data('hs300',start='2014-01-01',ma = [5,12,13,18,20,30,60,120])
     #print(df)
-    df = read_csv_excel('/Users/leotao/Downloads/沪深300回测.xlsx', '择时分析-创')
-    df = MA_CALCULATOR(df)
-    df = df.get_ma(ll = [5,12,13,18,20,30,60,120])
+    #df = read_csv_excel('/Users/leotao/Downloads/沪深300回测.xlsx', '择时分析-创')
+    #df = MA_CALCULATOR(df)
+    #df = df.get_ma(ll = [5,12,13,18,20,30,60,120])
     test = hs_300_strategy(df)
     pgraph = test.backtest()
     print('start date: ' + test.start_date)

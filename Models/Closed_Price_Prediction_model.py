@@ -38,6 +38,18 @@ class arbitrary_prediction():
         _df = pd.concat([self._df, _df])
         return _df
 
+    def one_day_gradient_change(self,predict_days = 3):
+        gradient = self._last_price - self._df.close[len(self._df)-2]
+        dic = {}
+        dic['date'] = [str(self._last_date + datetime.timedelta(i + 1))[:10] for i in range(predict_days)]
+        dic['close'] = []
+        for i in range(predict_days):
+            dic['close'].append(self._last_price+(i+1)*gradient)
+        _df = pd.DataFrame(dic)
+        _df = _df.set_index('date')
+        _df = pd.concat([self._df, _df])
+        return _df
+
 
 if __name__=='__main__':
     df = ts.get_hist_data('000001','2016-08-08')
@@ -45,3 +57,4 @@ if __name__=='__main__':
     print(df.ten_pct_up())
     print(df.ten_pct_down())
     print(df.ten_pct_remain())
+    print(df.one_day_gradient_change())
