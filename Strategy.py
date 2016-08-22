@@ -130,6 +130,7 @@ class Strategy_Base(object):
 
 
     def _return_rate(self):
+        #不变是1
         for i in range(len(self._df)):
             self._df.loc[i:i + 1, 'return'] = self._df.equity[i]/self.initial_invest
 
@@ -144,15 +145,18 @@ class Strategy_Base(object):
             self._df.loc[i:i + 1, 'cash'] = self.total_invest
             if i <= 1: continue
 
-            long,invest_pct, cash_used, if_pct_long = self._if_long(i)
+            #先看short还是不short,short信号大于买入信号
             short, short_nub, if_pct_short = self._if_short(i)
-
             if i == len(self._df) - 1: continue
             if short == True:
                 self._position(short_pct=short_nub,i=i,if_pct=if_pct_short, long_short=2)
+                self._df.loc[i:i + 1, 'short'] = 1
                 continue
+            #再买买入信号,卖出和买入不可能同时出现
+            long, invest_pct, cash_used, if_pct_long = self._if_long(i)
             if long == True:
                 self._position(invest_pct=invest_pct,long_pct=cash_used, i=i, if_pct=if_pct_long, long_short=1)
+                self._df.loc[i:i + 1, 'long'] = 1
                 continue
             if long == False and short == False:
                 self._df.loc[i + 1:i + 2, 'position'] = self._df.position[i]
@@ -163,6 +167,7 @@ class Strategy_Base(object):
         self.short_count = self._df.short.sum()
 
     def _beta(self):
+        #100%为基础,不变是1
         for i in range(len(self._df)):
             self._df.loc[i:i+1,'beta']=self._df.close[i]/self._df.close[0]
 
@@ -174,25 +179,10 @@ class Strategy_Base(object):
         self.long_or_short()
         self._equity()
         self._win_lose()
-        #f.write('买入次数: '+str(self.long_count)+ '\n')
-        ##f.write('卖出次数: '+str(self.short_count)+ '\n')
         self._drawdown()
         self._return_rate()
         self.long_short_count()
         self._beta()
-        #f.write('信号个数: '+str(self.long_count+self.short_count)+'\n')
-        #f.write('盈利次数: '+str(self.win_count)+ '\n')
-        #f.write('单次全仓平仓赢: ' + str(max(self.win_rate))+ '\n')
-        #f.write('单次全仓平仓亏损:' + str(max(self.lost_rate))+ '\n')
-        #f.write('单次盈利占总盈利比: '+ str(max(self.win_cash)/sum(self.win_cash))+ '\n')
-        #average_win = sum(self.win_cash) / len(self.win_cash)
-        #average_lost = sum(self.lost_cash) / len(self.lost_cash)
-        #f.write('平均盈利: ' + str(average_win)+'\n')
-        #f.write('平均方差: ' + str(sum((i - average_win) ** 2 for i in self.win_cash) / len(self.win_cash))+ '\n')
-        #f.write('平均亏损: '+ str(average_lost)+ '\n')
-        #f.write('平均方差: ' + str(sum((i - average_lost) ** 2 for i in self.lost_cash) / len(self.lost_cash))+ '\n')
-        #f.write('胜率: '+ str(len(self.win_cash)/(len(self.win_cash)+len(self.lost_cash)))+ '\n')
-        #f.write('盈亏保障倍数: '+str(sum(self.win_cash)/sum(self.lost_cash))+ '\n')
         print('最大回撤:'+str(max(self.drawdown)*100)+'%')
         print('买入信号统计:'+str(self.long_count))
         print('卖出信号统计:' + str(self.short_count))
@@ -200,7 +190,7 @@ class Strategy_Base(object):
         print('全仓平仓赢: ' + str(self.win_rate))
         print('最大回报:'+str((self._df['return'].max()-1)*100)+'%')
         print('最大亏损:'+str((self._df['return'].min()-1)*100)+'%')
-        print('总回报:'+str(self._df[len(self._df)-1:len(self._df)]['return']))
+        print('总回报:'+str((self._df[len(self._df)-1:len(self._df)]['return'][0]-1)*100)+'%')
         return self._df
 
     def coef_find(self):
@@ -250,7 +240,7 @@ class Strategy_Base(object):
         return self._df[len(self._df)-5:len(self._df)].loc[:,['monkey','bull','bear','long','short','close']]
 
 if __name__=='__main__':
-    df = ts.get_hist_data('160416','2015-07-27')
+    df = ts.get_hist_data('160416','2016-07-27')
     #print(df)
     test = Strategy_Base(df)
     test.get_ma(ll=[5,12,18,20,30,60,120])
