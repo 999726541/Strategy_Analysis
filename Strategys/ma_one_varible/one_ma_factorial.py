@@ -125,8 +125,8 @@ if __name__ == '__main__':
     # df = get_his_data('hs300',ma = [5,12,13,18,20,30,60,120])
     # print(df)
     i=60
-    ma = [0,i]
-    df_all = get_his_data('hs300',start='2014-02-27',end='2014-04-11', ma=[i])
+    ma = [1,i]
+    df_all = get_his_data('hs300', ma=ma)
     result = test_(ma,df_all)
     print(result)
 
