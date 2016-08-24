@@ -1,11 +1,9 @@
 # -*- coding:utf-8 -*-
 
-import datetime
-
 import pandas as pd
 
 from Strategy import Strategy_Base
-from pitcher import get_his_data,write_to_mongo
+from pitcher import get_his_data
 
 
 class hs_300_strategy(Strategy_Base):
@@ -71,6 +69,8 @@ class hs_300_strategy(Strategy_Base):
             short, short_nub, if_pct_short = self._if_short(i, ma_1=ma_1, ma_2=ma_2)
 
             if i == len(self._df) - 1: continue
+            #这个条件根据最小判断区间来定,这里最最小判断区间是3天(0,1,2),故3-1=2,用2天,<2
+            if i < 2:continue
             if short == True:
                 self._position(short_pct=short_nub, i=i, if_pct=if_pct_short, long_short=2)
                 self._df.loc[i:i+1,'short'] = 1
@@ -96,41 +96,38 @@ class hs_300_strategy(Strategy_Base):
         self._beta()
         return pd.DataFrame(self._df[len(self._df) - 1:len(self._df)]['return'])
 
-#########################____________________记得重新定义strategy函数!!!在loop strategy的时候
+# ########################____________________记得重新定义strategy函数!!!在loop strategy的时候
 def test_(ma,df):
     test = hs_300_strategy(df)
     comb = []
     return_ = []
     drawback = []
     Beta = []
+    position = []
     for i in range(1, len(ma)):
             print('Process MA'+str(ma[i]))
             test.backtest(ma_1=str(ma[i]), ma_2=str(ma[i]))
             comb.append(str(ma[i]))
-#不变为0,return, drawback,beta 都是 delta%变化
+# 不变为0,return, drawback,beta 都是 delta%变化
             return_.append(float(test._df[len(test._df)-1:len(test._df)]['return'][0]-1)*100)
             drawback.append(str(max(test._df.drawdown)*100))
             Beta.append((test._df[len(test._df)-1:len(test._df)]['beta'][0]-1)*100)
+            position.append(test._df.position[len(test._df)-1])
+# test._df.to_csv('1234.csv')
             test = hs_300_strategy(df)
 
     return pd.DataFrame({'MA':comb,'return':return_,'Beta':Beta,'drawback':drawback,
-                         'start':test._df.index[0],'end':test._df.index[len(test._df)-1]}).set_index('MA')
+                         'start':test._df.index[0],'end':test._df.index[len(test._df)-1],
+                         'position':position}).set_index('MA')
 
 
 if __name__ == '__main__':
     # df = get_his_data('hs300',ma = [5,12,13,18,20,30,60,120])
     # print(df)
-    ma = [i+1 for i in range(120)]
-    print(ma)
-    start = datetime.datetime.strptime('2015-01-01','%Y-%m-%d')
-    end = start+datetime.timedelta(90)
-    df_all = get_his_data('hs300', ma=ma)
-    while str(end) <= '2015-12-31':
-        print('start calculate :'+str(start)[:10]+' to '+str(end)[:10])
-        df = df_all[str(start)[:10]:str(end)[:10]]
-        test_1 = hs_300_strategy(df)
-        rr = test_(ma, df)
-        write_to_mongo(rr,db='MA_testback',collection='Single_MA',id=str(start)[:10])
-        start = start + datetime.timedelta(1)
-        end = start + datetime.timedelta(90)
+    i=60
+    ma = [0,i]
+    df_all = get_his_data('hs300',start='2014-02-27',end='2014-04-11', ma=[i])
+    result = test_(ma,df_all)
+    print(result)
+
 
