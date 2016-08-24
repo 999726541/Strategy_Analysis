@@ -2,7 +2,7 @@
 
 from Models.find_ma import MA_CALCULATOR
 from Strategy import Strategy_Base
-from Visualization import get_rid_unchanged,plot_return_beta
+from Visualization import get_rid_unchanged_equity,plot_return_beta
 from pitcher import read_csv_excel
 
 
@@ -103,7 +103,7 @@ if __name__=='__main__':
     test = GOLD_ETF(df)
     result = test.backtest()
     print('start date: ' + test.start_date)
-    pgraph = get_rid_unchanged(result)
+    pgraph = get_rid_unchanged_equity(result)
     plot_return_beta(pgraph)
     #test.today_signal(120)
 

@@ -1,7 +1,7 @@
 #-*- coding:utf-8 -*-
 
 from Strategy import Strategy_Base
-from Visualization import get_rid_unchanged,plot_return_beta
+from Visualization import get_rid_unchanged_equity,plot_return_beta
 from pitcher import get_his_data
 
 
@@ -118,5 +118,5 @@ if __name__=='__main__':
     print('start date: ' + test.start_date)
     test._df.to_csv('test2.csv')
     #test.coef_find()
-    pgraph = get_rid_unchanged(pgraph)
+    pgraph = get_rid_unchanged_equity(pgraph)
     plot_return_beta(pgraph)

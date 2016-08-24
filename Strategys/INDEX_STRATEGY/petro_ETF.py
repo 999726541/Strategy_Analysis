@@ -2,7 +2,7 @@
 
 from Models.find_ma import MA_CALCULATOR
 from Strategy import Strategy_Base
-from Visualization import plot_return_beta,get_rid_unchanged
+from Visualization import plot_return_beta,get_rid_unchanged_equity
 from pitcher import read_csv_excel
 
 
@@ -127,5 +127,5 @@ if __name__=='__main__':
     print('start date: ' + test.start_date)
     test._df.to_csv('test3.csv')
     #test.coef_find()
-    pgraph = get_rid_unchanged(pgraph)
+    pgraph = get_rid_unchanged_equity(pgraph)
     plot_return_beta(pgraph)

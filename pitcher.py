@@ -8,6 +8,7 @@ from pymongo import MongoClient
 
 from Models.find_ma import MA_CALCULATOR
 
+
 def _connect_mongo(host, port, username, password, db):
     """ A util for making a connection to mongo """
 
@@ -76,6 +77,7 @@ def get_his_data(code, start='2014-01-01', end=str(datetime.datetime.today())[0:
     df = df.get_ma(ll=ma, period=period, column_name=column_name)
     df = df[start:end]
     if df.isnull().any().any():
+        print(df)
         raise 'Need more date info for calculating MA before last NaN'
     return df
 
