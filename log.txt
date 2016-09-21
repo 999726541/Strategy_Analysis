@@ -1,0 +1,420 @@
+ABEOW
+'DataFrame' object has no attribute 'Date'
+AITP
+'DataFrame' object has no attribute 'Date'
+ADXSW
+'DataFrame' object has no attribute 'Date'
+AGFSW
+'DataFrame' object has no attribute 'Date'
+ANDAR
+'DataFrame' object has no attribute 'Date'
+ANDAU
+'DataFrame' object has no attribute 'Date'
+ANDAW
+'DataFrame' object has no attribute 'Date'
+AUMAW
+'DataFrame' object has no attribute 'Date'
+ARWAR
+'DataFrame' object has no attribute 'Date'
+ARWAU
+'DataFrame' object has no attribute 'Date'
+ARWAW
+'DataFrame' object has no attribute 'Date'
+PUMP
+'DataFrame' object has no attribute 'Date'
+AGMX
+'DataFrame' object has no attribute 'Date'
+AZRX
+'DataFrame' object has no attribute 'Date'
+BHACR
+'DataFrame' object has no attribute 'Date'
+BHACU
+'DataFrame' object has no attribute 'Date'
+BHACW
+'DataFrame' object has no attribute 'Date'
+BNTCW
+'DataFrame' object has no attribute 'Date'
+BOLT
+'DataFrame' object has no attribute 'Date'
+BVXVW
+'DataFrame' object has no attribute 'Date'
+BLVDW
+'DataFrame' object has no attribute 'Date'
+BOXL
+'DataFrame' object has no attribute 'Date'
+CLACW
+'DataFrame' object has no attribute 'Date'
+CCNWW
+'DataFrame' object has no attribute 'Date'
+CATYW
+'DataFrame' object has no attribute 'Date'
+APOPW
+'DataFrame' object has no attribute 'Date'
+CLRBZ
+'DataFrame' object has no attribute 'Date'
+CERCW
+'DataFrame' object has no attribute 'Date'
+CERCZ
+'DataFrame' object has no attribute 'Date'
+CFCOW
+'DataFrame' object has no attribute 'Date'
+CHEKW
+'DataFrame' object has no attribute 'Date'
+CCFI
+'DataFrame' object has no attribute 'Date'
+CYHHZ
+'DataFrame' object has no attribute 'Date'
+CONG
+'DataFrame' object has no attribute 'Date'
+CPAA
+'DataFrame' object has no attribute 'Date'
+CPAAU
+'DataFrame' object has no attribute 'Date'
+CPAAW
+'DataFrame' object has no attribute 'Date'
+COYNW
+'DataFrame' object has no attribute 'Date'
+COWNL
+'DataFrame' object has no attribute 'Date'
+CYRXW
+'DataFrame' object has no attribute 'Date'
+DRIOW
+'DataFrame' object has no attribute 'Date'
+TACOW
+'DataFrame' object has no attribute 'Date'
+EAGLW
+'DataFrame' object has no attribute 'Date'
+EACQU
+'DataFrame' object has no attribute 'Date'
+EACQW
+'DataFrame' object has no attribute 'Date'
+ECACR
+'DataFrame' object has no attribute 'Date'
+ELECU
+'DataFrame' object has no attribute 'Date'
+ELECW
+'DataFrame' object has no attribute 'Date'
+ESSF
+'DataFrame' object has no attribute 'Date'
+EYEGW
+'DataFrame' object has no attribute 'Date'
+GCTS
+'DataFrame' object has no attribute 'Date'
+GFNSL
+'DataFrame' object has no attribute 'Date'
+GNST
+'DataFrame' object has no attribute 'Date'
+GPACU
+'DataFrame' object has no attribute 'Date'
+GPACW
+'DataFrame' object has no attribute 'Date'
+GRSHW
+'DataFrame' object has no attribute 'Date'
+GPIAW
+'DataFrame' object has no attribute 'Date'
+HRMNW
+'DataFrame' object has no attribute 'Date'
+HCAPL
+'DataFrame' object has no attribute 'Date'
+HCACU
+'DataFrame' object has no attribute 'Date'
+HCACW
+'DataFrame' object has no attribute 'Date'
+HBANN
+'DataFrame' object has no attribute 'Date'
+HDRAR
+'DataFrame' object has no attribute 'Date'
+HDRAU
+'DataFrame' object has no attribute 'Date'
+HDRAW
+'DataFrame' object has no attribute 'Date'
+ENZL
+Query failed with error: "'No definition found for Table yahoo.finance.historicaldata'".
+JASNW
+'DataFrame' object has no attribute 'Date'
+JSYNR
+'DataFrame' object has no attribute 'Date'
+JSYNW
+'DataFrame' object has no attribute 'Date'
+WYIGW
+'DataFrame' object has no attribute 'Date'
+KTOVW
+'DataFrame' object has no attribute 'Date'
+KLREW
+'DataFrame' object has no attribute 'Date'
+LCAHW
+'DataFrame' object has no attribute 'Date'
+LINDW
+'DataFrame' object has no attribute 'Date'
+LMFAW
+'DataFrame' object has no attribute 'Date'
+MACQ
+'DataFrame' object has no attribute 'Date'
+MIII
+'DataFrame' object has no attribute 'Date'
+MIIIW
+'DataFrame' object has no attribute 'Date'
+MAPI
+'DataFrame' object has no attribute 'Date'
+MDVXW
+'DataFrame' object has no attribute 'Date'
+MSDIW
+'DataFrame' object has no attribute 'Date'
+MTFB
+'DataFrame' object has no attribute 'Date'
+NBCP
+'DataFrame' object has no attribute 'Date'
+NUROW
+'DataFrame' object has no attribute 'Date'
+NXEOW
+'DataFrame' object has no attribute 'Date'
+NXTDW
+'DataFrame' object has no attribute 'Date'
+OCLSW
+'DataFrame' object has no attribute 'Date'
+ONSIW
+'DataFrame' object has no attribute 'Date'
+ONTXW
+'DataFrame' object has no attribute 'Date'
+OPGNW
+'DataFrame' object has no attribute 'Date'
+OACQR
+'DataFrame' object has no attribute 'Date'
+OACQU
+'DataFrame' object has no attribute 'Date'
+OACQW
+'DataFrame' object has no attribute 'Date'
+OFIX
+connection closed
+OSIS
+connection closed
+OSIR
+connection closed
+OSN
+connection closed
+OTG
+'DataFrame' object has no attribute 'Date'
+OTEL
+connection closed
+OTIC
+connection closed
+OXBRW
+'DataFrame' object has no attribute 'Date'
+OTTR
+localhost:27017: [Errno 61] Connection refused
+PACEW
+'DataFrame' object has no attribute 'Date'
+PACEU
+connection closed
+PACB
+connection closed
+PCBK
+connection closed
+PAACR
+'DataFrame' object has no attribute 'Date'
+PAACW
+'DataFrame' object has no attribute 'Date'
+PEIX
+connection closed
+PKBK
+localhost:27017: [Errno 61] Connection refused
+PRKR
+localhost:27017: [Errno 61] Connection refused
+PKOH
+localhost:27017: [Errno 61] Connection refused
+PARN
+localhost:27017: [Errno 61] Connection refused
+PTNR
+localhost:27017: [Errno 61] Connection refused
+PBHC
+localhost:27017: [Errno 61] Connection refused
+PATK
+localhost:27017: [Errno 61] Connection refused
+PNBK
+localhost:27017: [Errno 61] Connection refused
+PATI
+localhost:27017: [Errno 61] Connection refused
+PEGI
+localhost:27017: [Errno 61] Connection refused
+PDCO
+localhost:27017: [Errno 61] Connection refused
+PTEN
+localhost:27017: [Errno 61] Connection refused
+PCTI
+connection closed
+PDCE
+connection closed
+PDFS
+connection closed
+PDLI
+connection closed
+PDVW
+connection closed
+SKIS
+connection closed
+PGC
+connection closed
+PEGA
+connection closed
+PCO
+localhost:27017: [Errno 61] Connection refused
+PENN
+localhost:27017: [Errno 61] Connection refused
+PFLT
+localhost:27017: [Errno 61] Connection refused
+PNNT
+localhost:27017: [Errno 61] Connection refused
+PWOD
+localhost:27017: [Errno 61] Connection refused
+PTXP
+localhost:27017: [Errno 61] Connection refused
+PEBO
+localhost:27017: [Errno 61] Connection refused
+PEBK
+localhost:27017: [Errno 61] Connection refused
+PFBX
+localhost:27017: [Errno 61] Connection refused
+PFIS
+localhost:27017: [Errno 61] Connection refused
+PBCT
+localhost:27017: [Errno 61] Connection refused
+PUB
+localhost:27017: [Errno 61] Connection refused
+PRCP
+localhost:27017: [Errno 61] Connection refused
+PPHM
+localhost:27017: [Errno 61] Connection refused
+PPHMP
+localhost:27017: [Errno 61] Connection refused
+PRFT
+localhost:27017: [Errno 61] Connection refused
+PFMT
+localhost:27017: [Errno 61] Connection refused
+PERF
+localhost:27017: [Errno 61] Connection refused
+PERI
+localhost:27017: [Errno 61] Connection refused
+PESI
+localhost:27017: [Errno 61] Connection refused
+PTX
+localhost:27017: [Errno 61] Connection refused
+PERY
+localhost:27017: [Errno 61] Connection refused
+PGLC
+localhost:27017: [Errno 61] Connection refused
+PETS
+localhost:27017: [Errno 61] Connection refused
+PFSW
+localhost:27017: [Errno 61] Connection refused
+PGTI
+localhost:27017: [Errno 61] Connection refused
+PZRX
+localhost:27017: [Errno 61] Connection refused
+PHII
+localhost:27017: [Errno 61] Connection refused
+PHIIK
+localhost:27017: [Errno 61] Connection refused
+PAHC
+localhost:27017: [Errno 61] Connection refused
+PHMD
+localhost:27017: [Errno 61] Connection refused
+PLAB
+localhost:27017: [Errno 61] Connection refused
+PICO
+localhost:27017: [Errno 61] Connection refused
+PIRS
+localhost:27017: [Errno 61] Connection refused
+PLXP
+'DataFrame' object has no attribute 'Date'
+QPACU
+'DataFrame' object has no attribute 'Date'
+QPACW
+'DataFrame' object has no attribute 'Date'
+TALL
+'DataFrame' object has no attribute 'Date'
+RSAS
+'DataFrame' object has no attribute 'Date'
+RBIO
+'DataFrame' object has no attribute 'Date'
+SHLDW
+'DataFrame' object has no attribute 'Date'
+SNFCA
+'DataFrame' object has no attribute 'Date'
+SNHNL
+'DataFrame' object has no attribute 'Date'
+SRTSW
+'DataFrame' object has no attribute 'Date'
+SRAQW
+'DataFrame' object has no attribute 'Date'
+SRVA
+'DataFrame' object has no attribute 'Date'
+SKYW
+Query failed with error: "'No definition found for Table yahoo.finance.historicaldata'".
+SOHOM
+'DataFrame' object has no attribute 'Date'
+STLRU
+'DataFrame' object has no attribute 'Date'
+TRTLW
+'DataFrame' object has no attribute 'Date'
+USAK
+Query failed with error: "'No definition found for Table yahoo.finance.historicaldata'".
+VMET
+'DataFrame' object has no attribute 'Date'
+VKTXW
+'DataFrame' object has no attribute 'Date'
+WNFM
+'DataFrame' object has no attribute 'Date'
+WVVIP
+'DataFrame' object has no attribute 'Date'
+ZNWAA
+'DataFrame' object has no attribute 'Date'
+ZIONZ
+'DataFrame' object has no attribute 'Date'
+OTG
+'DataFrame' object has no attribute 'Date'
+OUTR
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "OUTR" }
+OVAS
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "OVAS" }
+OSTK
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "OSTK" }
+OXBRW
+'DataFrame' object has no attribute 'Date'
+OXBR
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "OXBR" }
+OXFD
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "OXFD" }
+OXLC
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "OXLC" }
+OXLCN
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "OXLCN" }
+OXLCO
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "OXLCO" }
+PFIN
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PFIN" }
+PTSI
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PTSI" }
+PCAR
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PCAR" }
+PACEW
+'DataFrame' object has no attribute 'Date'
+PACE
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PACE" }
+PMBC
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PMBC" }
+PPBI
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PPBI" }
+PAACR
+'DataFrame' object has no attribute 'Date'
+PAAC
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PAAC" }
+PAACW
+'DataFrame' object has no attribute 'Date'
+PAACU
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PAACU" }
+PCRX
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PCRX" }
+PACW
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PACW" }
+PTIE
+E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PTIE" }

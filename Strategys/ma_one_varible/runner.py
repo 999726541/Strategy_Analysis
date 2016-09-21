@@ -1,7 +1,5 @@
 # -*- coding:utf-8 -*-
 
-import datetime
-
 import pandas as pd
 
 from Strategys.ma_one_varible.one_ma_factorial import test_,hs_300_strategy
@@ -37,12 +35,12 @@ def date_accmulation():
         end = df.index[len(df) - 1]
         print('start calculate :' + str(start) + ' to ' + str(end))
         rr = test_(ma, df)
-        write_to_mongo(rr, db='MA_testback', collection='Single_MA_accmulation', id=str(end))
+        write_to_mongo(rr, db='Single_MA_testback', collection='2016-08-31', id=str(end))
 
 # ----------------------------------------最近日,所有均线策略合集----------------
-def date_accmulation_getall():
+def date_accmulation_getall(today):
     ma = [i  for i in range(2,241)]
-    df_all = get_his_data('hs300', ma=ma)
+    df_all = get_his_data('000300', ma=ma,index=True)
     test = hs_300_strategy(df_all)
     for ii in ma:
         print('processing MA_'+str(ii))
@@ -50,9 +48,8 @@ def date_accmulation_getall():
         # return原始是1,100%
         df = pd.concat([test._df.position,test._df['return'],test._df.beta,test._df.drawdown,test._df.long,
                         test._df.short],axis=1)
-        write_to_mongo(df, db='MA_testback', collection='Single_MA_accmulation_all', id='MA_'+str(ii)+'_'+str(datetime.datetime.today())[:10])
+        write_to_mongo(df, db='Single_MA_testback', collection=today, id='MA_'+str(ii))
         test = hs_300_strategy(df_all)
-
 #---------------------------Runner-----------------------
 
-date_accmulation_getall()
+date_accmulation_getall('2016-09-06')

@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 import pylab
 
-from Visualization import get_rid_unchanged,get_rid_Zero
 from pitcher import read_mongo
 
 
@@ -17,7 +16,11 @@ def sort_df_index(df):
 
 
 def return_delta(df):
+    #随着净资产增加 alpha 倍数,波动也会增加相应倍数,为了消除这个倍数影响,除以 t-1的alpha
     dd = pd.DataFrame(df['return']).diff()
+    # 除以上一次的t-1时间的return
+    for i in range(1,len(dd)-1):
+        dd.loc[i:i+1,'return'] = dd['return'][i]/df['return'][i-1]
     dd = dd.rename(columns={'return':'delta_return'})
     combine = pd.concat([df,dd],axis=1)
     combine = combine[1:]
@@ -33,15 +36,11 @@ def acf_check(data):
     pylab.plot(data_draw)
 
 
-def ma_compare(alldata,start,end):
-    a_return, b_dlt = get_return_and_delta(alldata, ma=[i for i in range(2,121)])
-    return a_return[start:end].T,b_dlt[start:end].T
-
-def find_ma_strategy(ma):
+def find_ma_strategy(ma,date):
     assert type(ma) is list
     records = []
     for i in ma:
-        record = read_mongo(db='MA_testback', collection='Single_MA_accmulation_all', query={'_id': 'MA_'+str(i)+'_2016-08-24'})[0]
+        record = read_mongo(db='Single_MA_testback', collection=date, query={'_id': 'MA_'+str(i)})[0]
         records.append(record)
     return records
 
@@ -73,11 +72,13 @@ def find_delta_return_ave(df):
 
 
 
-def draw_delta_return_ave(ma):
+def draw_delta_return_ave(ma,start = None, end = None):
     assert type(ma) is int
     #直接画图,画出delta ma strategy和delta ma 的ave,每次开仓的平均回报率
     alldata = find_ma_strategy([ma])
     data = return_delta(alldata[0])
+    data = data[start:end]
+    data.to_csv('888.csv')
     data = find_delta_return_ave(data)
     # data = get_rid_unchanged(data,'delta_return')
     data[['delta_return', 'ave']].plot()
@@ -94,18 +95,35 @@ def draw_acf(data):
     pylab.show()
 
 # -------------------------------------------------------#######-------------------------------------
-# for ma in range(2,240):
-draw_delta_return_ave(44)
+#for ma in range(2,240):
+#draw_delta_return_ave(20,start='2016-08-01',end='2016-08-20')
 
 
-alldata = find_ma_strategy([44])
-print(alldata[0])
-data = return_delta(alldata[0])
-data = data[:100]
-data = find_delta_return_ave(data)
-data = get_rid_unchanged(data,'ave')
-data = get_rid_Zero(data,'ave')
-#print(data)
-npdata = data['ave']
-#draw_acf(npdata)
-print(data['ave'].mean())
+alldata = find_ma_strategy([i+2 for i in range(238)],date='2016-09-05')
+##print(alldata[0])
+#ave = {}
+all_return = pd.DataFrame()
+for element in range(len(alldata)):
+    _return = alldata[element]['return']
+    _return = _return.rename('ma_'+str(element+2))
+    all_return = pd.concat([all_return,pd.DataFrame(_return)],axis=1)
+all_return.to_csv('今天240天均线结果.csv')
+
+#    data = return_delta(alldata[element])
+#    data = data['2015-01-01':'2015-12-31']
+#    #data['return'].plot()
+#    #pylab.show()
+#
+#    data = find_delta_return_ave(data)
+#    data = get_rid_unchanged(data,'ave')
+#    data = get_rid_Zero(data,'ave')
+#    #print(data)
+#
+#    #print(data)
+#    #data.to_csv('results2.csv')
+#    # draw acf
+#    # npdata = data['ave']
+#    # draw_acf(npdata)
+#    ave[element+2] = [data['ave'].mean()]
+#print(pd.DataFrame(ave).T)
+#pd.DataFrame(ave).T.to_csv('result.csv')

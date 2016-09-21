@@ -50,7 +50,7 @@ def get_rid_Zero(df,fuckoff_column):
     assert type(fuckoff_column) is str
     df = df.reset_index()
     ll = []
-    for i in range(len(df)-1):
+    for i in range(len(df)):
         if df[fuckoff_column][i] == 0:
             ll.append(i)
     df = df.drop(ll)

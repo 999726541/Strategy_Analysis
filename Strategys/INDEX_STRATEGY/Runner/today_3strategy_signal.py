@@ -15,28 +15,28 @@ def tree_predict(df):
     xx = arbitrary_prediction(df)
     return [xx.one_day_gradient_change()]
 
-
-gold_index = get_his_data('159934',ma=[4,5,12,13,16,18,20,30,60,120,14])
+start = '2015-10-10'
+gold_index = get_his_data('159934',start=start,ma=[4,5,12,13,16,18,20,30,60,120,14],index=True)
 gold_index = tree_predict(gold_index)
 
 
 
 
-petro_index = get_his_data('162411',ma=[4,5,12,13,16,18,20,30,60,120,14])
+petro_index = get_his_data('162411',ma=[4,5,12,13,16,18,20,30,60,120,14],start=start,index=True)
 petro_index = tree_predict(petro_index)
 
 
 
-hs300_index = get_his_data('hs300',ma = [5,12,13,16,18,20,30,60,120,14])
+hs300_index = get_his_data('000300',ma = [5,12,13,16,18,20,30,60,120,14],start=start,index=True)
 hs300_index = tree_predict(hs300_index)
 
 
 
-cyb = get_his_data('cyb',ma = [4,5,12,13,16,18,20,30,60,120,14,10])
+cyb = get_his_data('399006',ma = [4,5,12,13,16,18,20,30,60,120,14,10],start=start,index=True)
 cyb = tree_predict(cyb)
 
 
-NSD_ETF = get_his_data('513100',ma=[3,60,120,250])
+NSD_ETF = get_his_data('513100',ma=[3,60,120,250],start=start,index=True)
 NSD_ETF = tree_predict(NSD_ETF)
 
 

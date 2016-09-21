@@ -9,7 +9,14 @@ from pitcher import get_his_data
 class hs_300_strategy(Strategy_Base):
     def if_bull(self, longest_period=0):
         # 返回新的牛市df
-        pass
+        for i in range(len(self._df)):
+            dd = self._df[i:i + 1]
+            if (dd.ma_30_close[0] > dd.ma_120_close[0] and
+                            dd.ma_12_close[0] > dd.ma_20_close[0] > dd.ma_30_close[0]) \
+                    or (dd.ma_5_close[0] > dd.ma_12_close[0] > dd.ma_18_close[0] > dd.ma_30_close[0] and
+                                dd.ma_30_close[0] > self._df.ma_30_close[i - 1]):
+                self._df.loc[i:i + 1, ('bull')] = 1
+        return self._df
 
     def if_bear(self, longest_period=0):
         # 返回熊市值

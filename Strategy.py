@@ -183,14 +183,14 @@ class Strategy_Base(object):
         self._return_rate()
         self.long_short_count()
         self._beta()
-        print('最大回撤:'+str(max(self.drawdown)*100)+'%')
-        print('买入信号统计:'+str(self.long_count))
-        print('卖出信号统计:' + str(self.short_count))
-        print('全仓平仓亏损:' + str(self.lost_rate))
-        print('全仓平仓赢: ' + str(self.win_rate))
-        print('最大回报:'+str((self._df['return'].max()-1)*100)+'%')
-        print('最大亏损:'+str((self._df['return'].min()-1)*100)+'%')
-        print('总回报:'+str((self._df[len(self._df)-1:len(self._df)]['return'][0]-1)*100)+'%')
+        print('Drawdown:'+str(max(self.drawdown)*100)+'%')
+        print('Long signal count:'+str(self.long_count))
+        print('Short signal count:' + str(self.short_count))
+        print('Zero position lost:' + str(self.lost_rate))
+        print('Zero position win: ' + str(self.win_rate))
+        print('Maxmium return:'+str((self._df['return'].max()-1)*100)+'%')
+        print('Minimum return:'+str((self._df['return'].min()-1)*100)+'%')
+        print('Overall return:'+str((self._df[len(self._df)-1:len(self._df)]['return'][0]-1)*100)+'%')
         return self._df
 
     def coef_find(self):

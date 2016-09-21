@@ -108,7 +108,7 @@ class hs_300_strategy(Strategy_Base):
 
 
 if __name__=='__main__':
-    df = get_his_data('hs300',start='2014-01-01',ma = [5,12,13,18,20,30,60,120])
+    df = get_his_data('hs300',start='2014-01-01',ma = [5,12,13,18,20,30,60,120],index=True)
     #print(df)
     #df = read_csv_excel('/Users/leotao/Downloads/沪深300回测.xlsx', '择时分析-创')
     #df = MA_CALCULATOR(df)
@@ -116,7 +116,7 @@ if __name__=='__main__':
     test = hs_300_strategy(df)
     pgraph = test.backtest()
     print('start date: ' + test.start_date)
-    test._df.to_csv('test2.csv')
+    #test._df.to_csv('test2.csv')
     #test.coef_find()
     pgraph = get_rid_unchanged_equity(pgraph)
     plot_return_beta(pgraph)
