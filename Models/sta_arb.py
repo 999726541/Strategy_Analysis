@@ -1,6 +1,7 @@
 # -*- coding:UTF-8 -*-
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import pylab
 import statsmodels.api as sm
 
@@ -37,14 +38,26 @@ def find_cointegrated_pairs(dataframe):
     return pvalue_matrix, pairs
 
 
+def find_cointegrated_values(dataframe):
+    keys = dataframe.keys()
+    stock1 = dataframe[keys[0]]
+    stock2 = dataframe[keys[1]]
+    result = sm.tsa.stattools.coint(stock1, stock2)
+    pvalue = result[1]
+    return pvalue
+
+
 def zscore_test(series,data):
     #  long, short or Do nothing
     result = (data - series.mean()) / np.std(series)
-    print(series[-10:])
-    if result >= 1: return -1
-    if result <= -1: return 1
+    short = series.mean() + np.std(series)
+    long = series.mean() - np.std(series)
+    offset = str(series.mean() + np.std(series)*0.5)+' to '+str(series.mean() - np.std(series)*0.5)
+    #print(series[-10:])
+    if result >= 1: return -1,long,short,offset,(data - series.mean() - np.std(series)*0.5)
+    if result <= -1: return 1,long,short,offset,(series.mean() - np.std(series)*0.5-data)
     else: print('No signal occur')
-    return 0
+    return 0,long,short,offset,0
 
 
 class Sta_arb_draw():
@@ -88,7 +101,23 @@ class Sta_arb_draw():
         date = self._SS.index[-1:][0]
         data = self._SS[-1:][0]
         print('test date is :'+date)
-        signal = zscore_test(self._SS,data)
+        signal,long,short,offset,profit = zscore_test(self._SS,data)
         if signal == -1: print('short')
         if signal == 1: print('long')
-        return signal
+        dic ={}
+        profit = profit / (self._x[-1:][0] + self._y[-1:][0])
+        dic['signal'] = [signal]
+        dic['date'] = [date]
+        dic['equation'] = [self._y.name + '=' + str(self._result.params[0]) + '+' + str(self._result.params[1]) + '*' + self._x.name]
+        dic['long_P'] = [long]
+        dic['short_P'] = [short]
+        dic['offset_P'] = [offset]
+        dic['stock1'] = self._df.keys()[0]
+        dic['stock2'] = self._df.keys()[1]
+        dic['expected_profit'] = profit
+        dic['current_diff'] = data
+        dic['stock1_price'] = self._x[-1:][0]
+        dic['stock2_price'] = self._y[-1:][0]
+        df = pd.DataFrame(dic)[['date','stock1','stock1_price','stock2','stock2_price','signal','equation','long_P','short_P',
+                                'offset_P','current_diff','expected_profit']]
+        return df

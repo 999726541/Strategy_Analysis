@@ -26,7 +26,7 @@ def get_data(stock,start,end):
         return pd.DataFrame()
 
     data = data.drop(['Date','Symbol'],axis=1)
-    data = data.sort()
+    data = data.sort_index()
     for i in data.columns:
         data[i] = data[i].astype(np.float)
     #data['Adj_Open'] = 0
@@ -42,16 +42,16 @@ def get_data(stock,start,end):
 
 if __name__=='__main__':
     company_list = pd.read_csv('/Users/leotao/Downloads/companylist.csv')
-    company_list = company_list[company_list.loc[company_list['Symbol']=='OFIX'].index[0]:]  # 从特定断点开始
+    #company_list = company_list[company_list.loc[company_list['Symbol']=='OFIX'].index[0]:]  # 从特定断点开始
     # print(get_data(company_list.Symbol[0],start='2016-01-01',end='2016-09-09'))
     mongo = MONGODB(db='NASDAQ_ALL')    # 打开端口
     ii = 0
     for code in company_list.Symbol:    # 所有NASDAQ股票
         print('Process : '+code)
-        data = get_data(code,start='2012-01-01',end='2016-09-09')
+        data = get_data(code,start='2016-09-09',end='2016-09-21')
         if len(data) == 0: continue
         try:
-            mongo.write_to_mongo(data,collection='until_2016-09-09',id=code)    # 输入数据
+            mongo.write_to_mongo(data,collection='2016-09-09_2016-09-20',id=code)    # 输入数据
         except Exception as e:
             f = open('log.txt', mode='a')
             f.write(code + '\n')

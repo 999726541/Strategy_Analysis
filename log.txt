@@ -418,3 +418,251 @@ PACW
 E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PACW" }
 PTIE
 E11000 duplicate key error collection: NASDAQ_ALL.until_2016-09-09 index: _id_ dup key: { : "PTIE" }
+ABEOW
+'DataFrame' object has no attribute 'Date'
+AITP
+'DataFrame' object has no attribute 'Date'
+ADXSW
+'DataFrame' object has no attribute 'Date'
+AGFSW
+'DataFrame' object has no attribute 'Date'
+ASRV
+'DataFrame' object has no attribute 'Date'
+ANDAR
+'DataFrame' object has no attribute 'Date'
+ANDAU
+'DataFrame' object has no attribute 'Date'
+ANDAW
+'DataFrame' object has no attribute 'Date'
+AUMAW
+'DataFrame' object has no attribute 'Date'
+ARWAR
+'DataFrame' object has no attribute 'Date'
+ARWAU
+'DataFrame' object has no attribute 'Date'
+ARWAW
+'DataFrame' object has no attribute 'Date'
+PUMP
+'DataFrame' object has no attribute 'Date'
+AGMX
+'DataFrame' object has no attribute 'Date'
+AZRX
+'DataFrame' object has no attribute 'Date'
+BHACR
+'DataFrame' object has no attribute 'Date'
+BHACU
+'DataFrame' object has no attribute 'Date'
+BHACW
+'DataFrame' object has no attribute 'Date'
+BNTCW
+'DataFrame' object has no attribute 'Date'
+BOLT
+'DataFrame' object has no attribute 'Date'
+BVXVW
+'DataFrame' object has no attribute 'Date'
+BLVDW
+'DataFrame' object has no attribute 'Date'
+BOXL
+'DataFrame' object has no attribute 'Date'
+CLACW
+'DataFrame' object has no attribute 'Date'
+CCNWW
+'DataFrame' object has no attribute 'Date'
+CATYW
+'DataFrame' object has no attribute 'Date'
+APOPW
+'DataFrame' object has no attribute 'Date'
+CLRBZ
+'DataFrame' object has no attribute 'Date'
+CERCW
+'DataFrame' object has no attribute 'Date'
+CERCZ
+'DataFrame' object has no attribute 'Date'
+CFCOW
+'DataFrame' object has no attribute 'Date'
+CHEKW
+'DataFrame' object has no attribute 'Date'
+CBMXW
+'DataFrame' object has no attribute 'Date'
+CCFI
+'DataFrame' object has no attribute 'Date'
+CYHHZ
+'DataFrame' object has no attribute 'Date'
+CONG
+'DataFrame' object has no attribute 'Date'
+CPAA
+'DataFrame' object has no attribute 'Date'
+CPAAU
+'DataFrame' object has no attribute 'Date'
+CPAAW
+'DataFrame' object has no attribute 'Date'
+COYNW
+'DataFrame' object has no attribute 'Date'
+COWNL
+'DataFrame' object has no attribute 'Date'
+CYRXW
+'DataFrame' object has no attribute 'Date'
+CYTXW
+'DataFrame' object has no attribute 'Date'
+DRIOW
+'DataFrame' object has no attribute 'Date'
+TACOW
+'DataFrame' object has no attribute 'Date'
+DELTW
+'DataFrame' object has no attribute 'Date'
+EAGLW
+'DataFrame' object has no attribute 'Date'
+EACQU
+'DataFrame' object has no attribute 'Date'
+EACQW
+'DataFrame' object has no attribute 'Date'
+ECACR
+'DataFrame' object has no attribute 'Date'
+ELECU
+'DataFrame' object has no attribute 'Date'
+ELECW
+'DataFrame' object has no attribute 'Date'
+ESSF
+'DataFrame' object has no attribute 'Date'
+EYEGW
+'DataFrame' object has no attribute 'Date'
+GCTS
+'DataFrame' object has no attribute 'Date'
+GFNSL
+'DataFrame' object has no attribute 'Date'
+GNST
+'DataFrame' object has no attribute 'Date'
+GPACU
+'DataFrame' object has no attribute 'Date'
+GPACW
+'DataFrame' object has no attribute 'Date'
+GRSHW
+'DataFrame' object has no attribute 'Date'
+GPIAW
+'DataFrame' object has no attribute 'Date'
+HRMNW
+'DataFrame' object has no attribute 'Date'
+HCAPL
+'DataFrame' object has no attribute 'Date'
+HCACU
+'DataFrame' object has no attribute 'Date'
+HCACW
+'DataFrame' object has no attribute 'Date'
+HBANN
+'DataFrame' object has no attribute 'Date'
+HDRAR
+'DataFrame' object has no attribute 'Date'
+HDRAU
+'DataFrame' object has no attribute 'Date'
+HDRAW
+'DataFrame' object has no attribute 'Date'
+JASNW
+'DataFrame' object has no attribute 'Date'
+JSYNR
+'DataFrame' object has no attribute 'Date'
+JSYNW
+'DataFrame' object has no attribute 'Date'
+WYIGW
+'DataFrame' object has no attribute 'Date'
+KTOVW
+'DataFrame' object has no attribute 'Date'
+KLREW
+'DataFrame' object has no attribute 'Date'
+LCAHW
+'DataFrame' object has no attribute 'Date'
+LINDW
+'DataFrame' object has no attribute 'Date'
+LMFAW
+'DataFrame' object has no attribute 'Date'
+MACQ
+'DataFrame' object has no attribute 'Date'
+MIII
+'DataFrame' object has no attribute 'Date'
+MIIIW
+'DataFrame' object has no attribute 'Date'
+MAPI
+'DataFrame' object has no attribute 'Date'
+MDVXW
+'DataFrame' object has no attribute 'Date'
+MSDIW
+'DataFrame' object has no attribute 'Date'
+MTFB
+'DataFrame' object has no attribute 'Date'
+NBCP
+'DataFrame' object has no attribute 'Date'
+NUROW
+'DataFrame' object has no attribute 'Date'
+NXEOW
+'DataFrame' object has no attribute 'Date'
+NXTDW
+'DataFrame' object has no attribute 'Date'
+OCLSW
+'DataFrame' object has no attribute 'Date'
+ONSIW
+'DataFrame' object has no attribute 'Date'
+ONTXW
+'DataFrame' object has no attribute 'Date'
+OPXAW
+'DataFrame' object has no attribute 'Date'
+OPGNW
+'DataFrame' object has no attribute 'Date'
+OACQR
+'DataFrame' object has no attribute 'Date'
+OACQU
+'DataFrame' object has no attribute 'Date'
+OACQW
+'DataFrame' object has no attribute 'Date'
+OTG
+'DataFrame' object has no attribute 'Date'
+OXBRW
+'DataFrame' object has no attribute 'Date'
+PACEW
+'DataFrame' object has no attribute 'Date'
+PAACR
+'DataFrame' object has no attribute 'Date'
+PAACW
+'DataFrame' object has no attribute 'Date'
+PLXP
+'DataFrame' object has no attribute 'Date'
+QPACU
+'DataFrame' object has no attribute 'Date'
+QPACW
+'DataFrame' object has no attribute 'Date'
+TALL
+'DataFrame' object has no attribute 'Date'
+RSAS
+'DataFrame' object has no attribute 'Date'
+RBIO
+'DataFrame' object has no attribute 'Date'
+SHLDW
+'DataFrame' object has no attribute 'Date'
+SNFCA
+'DataFrame' object has no attribute 'Date'
+SNHNL
+'DataFrame' object has no attribute 'Date'
+SRTSW
+'DataFrame' object has no attribute 'Date'
+SRAQW
+'DataFrame' object has no attribute 'Date'
+SRVA
+'DataFrame' object has no attribute 'Date'
+SOHOM
+'DataFrame' object has no attribute 'Date'
+STLRU
+'DataFrame' object has no attribute 'Date'
+TRTLW
+'DataFrame' object has no attribute 'Date'
+VMET
+'DataFrame' object has no attribute 'Date'
+VKTXW
+'DataFrame' object has no attribute 'Date'
+WNFM
+'DataFrame' object has no attribute 'Date'
+WVVIP
+'DataFrame' object has no attribute 'Date'
+YCB
+'DataFrame' object has no attribute 'Date'
+ZNWAA
+'DataFrame' object has no attribute 'Date'
+ZIONZ
+'DataFrame' object has no attribute 'Date'
